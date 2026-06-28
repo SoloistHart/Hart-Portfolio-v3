@@ -17,7 +17,7 @@ export default function Marquee() {
             {items.map((item, i) => (
               <span
                 key={`${dup}-${i}`}
-                className="flex items-center gap-8 px-8 text-3xl font-medium md:text-5xl"
+                className="flex items-center gap-6 px-6 text-2xl font-medium sm:gap-8 sm:px-8 sm:text-3xl md:text-5xl"
               >
                 {item}
                 <span className="text-accent">✦</span>

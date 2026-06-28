@@ -31,13 +31,13 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen flex-col justify-between overflow-hidden px-6 pb-12 pt-32 md:px-10"
+      className="relative flex min-h-[100dvh] flex-col justify-between overflow-hidden px-6 pb-12 pt-28 safe-top md:px-10 md:pt-32"
     >
       <div className="absolute inset-0 z-0">
         <HeroCanvas />
       </div>
 
-      <div className="relative z-10 flex items-start justify-between font-mono text-xs uppercase tracking-widest text-muted">
+      <div className="relative z-10 flex flex-wrap items-start justify-between gap-y-2 font-mono text-[10px] uppercase tracking-widest text-muted sm:text-xs">
         <span>Est. 2012</span>
         <span className="hidden md:block">Inspire · Innovate · Impact</span>
         <span>Independent Studio</span>
@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="relative z-10 pointer-events-none">
         <h1
           ref={titleRef}
-          className="text-[14vw] font-semibold leading-[0.92] tracking-tight md:text-[11vw]"
+          className="text-[13vw] font-semibold leading-[0.92] tracking-tight sm:text-[12vw] md:text-[11vw]"
         >
           <span className="reveal-line">
             <span>Designed to</span>

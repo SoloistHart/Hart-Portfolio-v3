@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
+import ClientShell from "@/components/ClientShell";
 import Navbar from "@/components/Navbar";
 
 const sans = Space_Grotesk({
@@ -23,6 +22,13 @@ export const metadata: Metadata = {
     "Portfolio of Hart, an independent digital studio crafting meaningful brand experiences through strategy, design, and technology.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0b0b0d",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,9 +38,8 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body>
         <div className="grain" aria-hidden />
-        <Cursor />
         <Navbar />
-        <SmoothScroll>{children}</SmoothScroll>
+        <ClientShell>{children}</ClientShell>
       </body>
     </html>
   );
