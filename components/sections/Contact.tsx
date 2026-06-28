@@ -42,9 +42,9 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="mt-20 flex items-center justify-between font-mono text-xs text-muted">
+      <div className="mt-20 flex flex-col gap-2 font-mono text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
         <span>© {new Date().getFullYear()} HART®</span>
-        <span>Inspire · Innovate · Impact</span>
+        <span className="hidden sm:inline">Inspire · Innovate · Impact</span>
       </div>
     </footer>
   );

@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const vertexShader = /* glsl */ `
   uniform float uTime;
@@ -14,11 +15,9 @@ const vertexShader = /* glsl */ `
   void main() {
     vec3 pos = position;
 
-    // travelling wave across the grid
     float wave = sin(pos.x * 0.35 + uTime) * cos(pos.y * 0.35 + uTime * 0.8);
     pos.z += wave * 1.2;
 
-    // mouse ripple — the "touch the lines" interaction
     float d = distance(pos.xy, uMouse);
     float ripple = smoothstep(7.0, 0.0, d) * uHover;
     pos.z += ripple * 6.0;
@@ -45,32 +44,30 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-function ParticleField() {
+function ParticleField({ cols, rows }: { cols: number; rows: number }) {
   const ref = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport } = useThree();
   const mouse = useRef(new THREE.Vector2(0, 0));
   const hover = useRef(0);
 
-  const COLS = 90;
-  const ROWS = 50;
   const GAP = 0.9;
 
   const { positions, scales } = useMemo(() => {
-    const positions = new Float32Array(COLS * ROWS * 3);
-    const scales = new Float32Array(COLS * ROWS);
+    const positions = new Float32Array(cols * rows * 3);
+    const scales = new Float32Array(cols * rows);
     let i = 0;
-    for (let x = 0; x < COLS; x++) {
-      for (let y = 0; y < ROWS; y++) {
-        positions[i * 3] = (x - COLS / 2) * GAP;
-        positions[i * 3 + 1] = (y - ROWS / 2) * GAP;
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        positions[i * 3] = (x - cols / 2) * GAP;
+        positions[i * 3 + 1] = (y - rows / 2) * GAP;
         positions[i * 3 + 2] = 0;
         scales[i] = 2.2;
         i++;
       }
     }
     return { positions, scales };
-  }, []);
+  }, [cols, rows]);
 
   const uniforms = useMemo(
     () => ({
@@ -86,7 +83,6 @@ function ParticleField() {
     if (!u) return;
     u.uTime.value = state.clock.elapsedTime;
 
-    // map normalized pointer (-1..1) into grid space
     const px = (state.pointer.x * viewport.width) / 2;
     const py = (state.pointer.y * viewport.height) / 2;
     mouse.current.lerp(new THREE.Vector2(px, py), 0.12);
@@ -123,14 +119,18 @@ function ParticleField() {
 }
 
 export default function HeroCanvas() {
+  const isMobile = useIsMobile();
+  const cols = isMobile ? 48 : 90;
+  const rows = isMobile ? 32 : 50;
+
   return (
     <Canvas
       className="absolute inset-0"
-      camera={{ position: [0, 0, 32], fov: 55 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true }}
+      camera={{ position: [0, 0, isMobile ? 28 : 32], fov: isMobile ? 60 : 55 }}
+      dpr={isMobile ? [1, 1.5] : [1, 2]}
+      gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }}
     >
-      <ParticleField />
+      <ParticleField key={`${cols}-${rows}`} cols={cols} rows={rows} />
     </Canvas>
   );
 }
