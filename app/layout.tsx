@@ -1,32 +1,46 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Sora } from "next/font/google";
 import "./globals.css";
-import ClientShell from "@/components/ClientShell";
-import Navbar from "@/components/Navbar";
 
-const sans = Space_Grotesk({
-  variable: "--font-sans-custom",
+import { PortfolioChat } from "@/components/portfolio-chat";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { CursorTrail } from "@/components/cursor-trail";
+
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
 });
 
-const mono = JetBrains_Mono({
-  variable: "--font-mono-custom",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "HART — Independent Design & Development",
+  metadataBase: new URL("https://portfolio-hart.vercel.app"),
+  title: {
+    default: "Rhohart Martel | AI Engineer & Automation Specialist",
+    template: "%s | Rhohart Martel",
+  },
   description:
-    "Portfolio of Hart, an independent digital studio crafting meaningful brand experiences through strategy, design, and technology.",
+    "AI Engineer who builds n8n automation pipelines, AI-powered dashboards, and intelligent business tools — turning manual processes into systems that run themselves.",
+  openGraph: {
+    title: "Rhohart Martel | AI Engineer & Automation Specialist",
+    description:
+      "AI Engineer who builds n8n automation pipelines, AI-powered dashboards, and intelligent business tools — turning manual processes into systems that run themselves.",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0b0b0d",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e171f" },
+  ],
 };
 
 export default function RootLayout({
@@ -35,11 +49,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-      <body>
-        <div className="grain" aria-hidden />
-        <Navbar />
-        <ClientShell>{children}</ClientShell>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sora.variable} ${plexMono.variable} h-full scroll-smooth`}
+    >
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <script
+        >
+          {`(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.classList.add(t)}catch(e){}})()`}
+        </script>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-background"
+        >
+          Skip to content
+        </a>
+        <ScrollProgress />
+        <CursorTrail />
+        {children}
+        <PortfolioChat />
       </body>
     </html>
   );
