@@ -3,6 +3,7 @@ import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ClientShell from "@/components/ClientShell";
 import Navbar from "@/components/Navbar";
+import { siteContent } from "@/lib/portfolio-data";
 
 const sans = Space_Grotesk({
   variable: "--font-sans-custom",
@@ -17,9 +18,8 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HART — Independent Design & Development",
-  description:
-    "Portfolio of Hart, an independent digital studio crafting meaningful brand experiences through strategy, design, and technology.",
+  title: `${siteContent.brand.name} | ${siteContent.hero.eyebrow}`,
+  description: siteContent.hero.description,
 };
 
 export const viewport: Viewport = {

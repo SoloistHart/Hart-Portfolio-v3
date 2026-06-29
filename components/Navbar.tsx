@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { siteContent } from "@/lib/portfolio-data";
 
 const links = [
   { label: "Work", href: "#work" },
@@ -42,7 +43,8 @@ export default function Navbar() {
           data-hover
           onClick={closeMenu}
         >
-          HART<span className="text-accent">®</span>
+          {siteContent.brand.name.split(" ")[0].toUpperCase()}
+          <span className="text-accent">®</span>
         </a>
 
         <ul className="hidden gap-8 md:flex">

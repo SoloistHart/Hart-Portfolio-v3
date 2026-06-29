@@ -3,14 +3,7 @@
 import Reveal from "@/components/Reveal";
 import { useState } from "react";
 import { useIsTouchDevice } from "@/hooks/useMediaQuery";
-
-const projects = [
-  { name: "Aurora Finance", cat: "Web · WebGL", year: "2025" },
-  { name: "Nomad Studios", cat: "Brand · Motion", year: "2024" },
-  { name: "Helix Health", cat: "Product · UX", year: "2024" },
-  { name: "Vertex AI", cat: "Web · 3D", year: "2023" },
-  { name: "Tide & Co.", cat: "E-commerce", year: "2023" },
-];
+import { projects } from "@/lib/portfolio-data";
 
 export default function Work() {
   const [active, setActive] = useState<number | null>(null);
@@ -27,7 +20,7 @@ export default function Work() {
 
       <ul className="border-t border-line">
         {projects.map((p, i) => (
-          <li key={p.name}>
+          <li key={p.slug}>
             <a
               href="#contact"
               data-hover
@@ -48,11 +41,11 @@ export default function Work() {
                       : "text-foreground"
                   }`}
                 >
-                  {p.name}
+                  {p.title}
                 </span>
               </div>
               <div className="flex items-center gap-4 pl-8 text-left sm:gap-6 sm:pl-0 sm:text-right">
-                <span className="text-sm text-muted sm:block">{p.cat}</span>
+                <span className="text-sm text-muted sm:block">{p.category}</span>
                 <span className="font-mono text-xs text-muted">{p.year}</span>
               </div>
             </a>

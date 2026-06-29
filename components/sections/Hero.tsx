@@ -3,10 +3,13 @@
 import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { gsap } from "gsap";
+import { siteContent } from "@/lib/portfolio-data";
 
 const HeroCanvas = dynamic(() => import("@/components/HeroCanvas"), {
   ssr: false,
 });
+
+const titleLines = ["I help businesses", "integrate AI and"];
 
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -38,29 +41,31 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex flex-wrap items-start justify-between gap-y-2 font-mono text-[10px] uppercase tracking-widest text-muted sm:text-xs">
-        <span>Est. 2012</span>
-        <span className="hidden md:block">Inspire · Innovate · Impact</span>
-        <span>Independent Studio</span>
+        <span>Manila · Remote</span>
+        <span className="hidden md:block">{siteContent.hero.eyebrow}</span>
+        <span>{siteContent.brand.shortRole}</span>
       </div>
 
       <div className="relative z-10 pointer-events-none">
         <h1
           ref={titleRef}
-          className="text-[13vw] font-semibold leading-[0.92] tracking-tight sm:text-[12vw] md:text-[11vw]"
+          className="text-[11vw] font-semibold leading-[0.92] tracking-tight sm:text-[10vw] md:text-[9vw] lg:text-[8vw]"
         >
-          <span className="reveal-line">
-            <span>Designed to</span>
-          </span>
+          {titleLines.map((line) => (
+            <span key={line} className="reveal-line">
+              <span>{line}</span>
+            </span>
+          ))}
           <span className="reveal-line">
             <span>
-              mean <span className="text-accent">something.</span>
+              automate workflows that{" "}
+              <span className="text-accent">scale.</span>
             </span>
           </span>
         </h1>
         <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <p className="max-w-md text-base text-muted">
-            Websites, products, brands, and systems built for clarity, scale
-            and impact.
+            {siteContent.hero.description}
           </p>
           <p className="pointer-events-auto font-mono text-xs uppercase tracking-widest text-accent">
             ✦ Dare to touch the lines
