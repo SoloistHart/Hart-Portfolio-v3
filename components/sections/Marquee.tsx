@@ -1,11 +1,8 @@
+import { siteContent } from "@/lib/portfolio-data";
+
 const items = [
-  "Strategy",
-  "Design",
-  "Development",
-  "Motion",
-  "Branding",
-  "WebGL",
-  "3D",
+  ...siteContent.hero.chips,
+  ...siteContent.about.skills.flatMap((group) => group.items.slice(0, 2)),
 ];
 
 export default function Marquee() {

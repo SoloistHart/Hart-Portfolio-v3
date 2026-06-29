@@ -9,10 +9,10 @@ if (typeof window !== "undefined") {
 }
 
 const stats = [
-  { value: 50, suffix: "+", label: "Projects completed" },
-  { value: 14, suffix: "+", label: "Years shaping direction" },
-  { value: 20, suffix: "+", label: "Team members" },
-  { value: 90, suffix: "%", label: "Clients return" },
+  { value: 30, suffix: "+", label: "n8n workflows deployed" },
+  { value: 4, suffix: "+", label: "Production tools shipped" },
+  { value: 50, suffix: "%", label: "Collection rate improvement" },
+  { value: 3, suffix: "", label: "Featured production projects" },
 ];
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
